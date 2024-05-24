@@ -73,7 +73,7 @@ model_path = 'models/models.dat'
 for filename in glob.glob(os.path.join(pos_im_path,"*.png")):
     fd = cv2.imread(filename,0)
     fd = cv2.resize(fd,(64,128))
-    fd = hog(fd,orientations=9,pixels_per_cell=(16,16),visualize=False,cells_per_block=(1,1))
+    fd = hog(fd,orientations=12,pixels_per_cell=(6,6),visualize=False,cells_per_block=(3,3))
     train_data.append(fd)
     train_labels.append(1)
 
@@ -81,7 +81,7 @@ for filename in glob.glob(os.path.join(pos_im_path,"*.png")):
 for filename in glob.glob(os.path.join(neg_im_path,"*.jpg")):
     fd = cv2.imread(filename,0)
     fd = cv2.resize(fd,(64,128))
-    fd = hog(fd,orientations=9,pixels_per_cell=(16,16),visualize=False,cells_per_block=(1,1))
+    fd = hog(fd,orientations=12,pixels_per_cell=(6,6),visualize=False,cells_per_block=(3,3))
     train_data.append(fd)
     train_labels.append(0)
 train_data = np.float32(train_data)
@@ -130,7 +130,7 @@ for im_scaled in pyramid_gaussian(image, downscale = downscale):
             continue
         window = color.rgb2gray(window)
 
-        fd=hog(window, orientations=9,pixels_per_cell=(16,16),visualize=False,cells_per_block=(1,1))
+        fd=hog(window, orientations=12,pixels_per_cell=(6,6),visualize=False,cells_per_block=(3,3))
         fd = fd.reshape(1, -1)
         pred = model.predict(fd)
         if pred == 1:
